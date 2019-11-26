@@ -2,7 +2,8 @@ package bnrg.app.criminalintent2frag.Preferences;
 
 public interface Pref {
 
-    public static final int CRIME_HOLDER_ITEM = 0;
-    public static final int POLICE_HOLDER_ITEM = 1;
+    public static final String EXTRA_CRIME_ID = "extra_crime_id";
+    public static final String ARG_CRIME_ID = "crime_id";
+
 
 }
