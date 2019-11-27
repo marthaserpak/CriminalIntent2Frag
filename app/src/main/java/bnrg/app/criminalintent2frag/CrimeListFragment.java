@@ -10,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -17,6 +18,9 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.List;
 
 import bnrg.app.criminalintent2frag.Utils.Utilities;
+
+import static bnrg.app.criminalintent2frag.Preferences.Pref.CALL_POLICE;
+import static bnrg.app.criminalintent2frag.Preferences.Pref.NOT_CALL_POLICE;
 
 
 public class CrimeListFragment extends Fragment {
@@ -55,18 +59,17 @@ public class CrimeListFragment extends Fragment {
         return mAdapter;
     }
 
-    private void updateUI(){
+    private void updateUI() {
 
         RecyclerView.Adapter adapter = mRecyclerView.getAdapter();
 
-         if (mAdapter != null) {
-             //TODO:mAdapter.notifyItemChanged(pos);
+        if (mAdapter != null) {
+            //TODO:mAdapter.notifyItemChanged(pos);
             mAdapter.notifyDataSetChanged();
         } else {
             mAdapter = new CrimeAdapter(mCrimes);
         }
     }
-
 
     public class CrimeHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
@@ -75,8 +78,7 @@ public class CrimeListFragment extends Fragment {
         private TextView date;
         private ImageView mSolved;
 
-
-        public CrimeHolder(LayoutInflater inflater, ViewGroup parent) {
+        CrimeHolder(LayoutInflater inflater, ViewGroup parent) {
             super(inflater.inflate(R.layout.list_item_crime, parent, false));
 
             itemView.setOnClickListener(this);
@@ -89,12 +91,12 @@ public class CrimeListFragment extends Fragment {
         private void bind(Crime crime) {
             mCrime = crime;
 
-            Utilities.setItemColor(mCrime,itemView);
+            Utilities.setItemColor(mCrime, itemView);
 
             title.setText(crime.getTitle());
             date.setText(crime.getDate().toString());
             mSolved.setVisibility(crime.isSolved() ?
-                   View.VISIBLE: View.GONE);
+                    View.VISIBLE : View.GONE);
         }
 
         @Override
@@ -104,7 +106,8 @@ public class CrimeListFragment extends Fragment {
         }
     }
 
-    public class PoliceHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+    public class PoliceHolder extends RecyclerView.ViewHolder implements
+            View.OnClickListener {
 
         private Crime mCrime;
         private TextView title;
@@ -113,7 +116,7 @@ public class CrimeListFragment extends Fragment {
         private ImageView mSolvedImageView;
 
 
-        public PoliceHolder(LayoutInflater inflater, ViewGroup parent) {
+        PoliceHolder(LayoutInflater inflater, ViewGroup parent) {
             super(inflater.inflate(R.layout.list_item_crime_police, parent, false));
 
             itemView.setOnClickListener(this);
@@ -136,9 +139,13 @@ public class CrimeListFragment extends Fragment {
             police.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Toast.makeText(police.getContext(), crime.getId().toString(), Toast.LENGTH_LONG);
+                    Toast.makeText(police.getContext(),
+                            crime.getId().toString(),
+                            Toast.LENGTH_LONG)
+                            .show();
                 }
             });
+
             mSolvedImageView.setVisibility(mCrime.isSolved() ? View.VISIBLE : View.GONE);
         }
 
@@ -151,12 +158,9 @@ public class CrimeListFragment extends Fragment {
 
     private class CrimeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
-        public final int NOT_CALL_POLICE = 0;
-        public final int CALL_POLICE = 1;
-
         private List<Crime> mCrimes;
 
-        public CrimeAdapter(List<Crime> crimes) {
+        CrimeAdapter(List<Crime> crimes) {
             mCrimes = crimes;
         }
 
@@ -173,7 +177,7 @@ public class CrimeListFragment extends Fragment {
             return viewType;
         }
 
-
+        @NonNull
         @Override
         public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 
@@ -184,20 +188,19 @@ public class CrimeListFragment extends Fragment {
             } else {
                 return new CrimeHolder(inflater, parent);
             }
-
         }
 
         @Override
         public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
 
             Crime crime = mCrimes.get(position);
+
             if (holder.getItemViewType() == CALL_POLICE) {
                 PoliceHolder policeHolder = (PoliceHolder) holder;
                 policeHolder.bind(crime);
             } else {
                 CrimeHolder crimeHolder = (CrimeHolder) holder;
                 crimeHolder.bind(crime);
-
             }
         }
 
@@ -206,5 +209,4 @@ public class CrimeListFragment extends Fragment {
             return mCrimes.size();
         }
     }
-
 }

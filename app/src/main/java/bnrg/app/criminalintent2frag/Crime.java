@@ -1,7 +1,5 @@
 package bnrg.app.criminalintent2frag;
 
-import android.widget.CheckBox;
-
 import java.util.Date;
 import java.util.UUID;
 
@@ -13,7 +11,7 @@ public class Crime {
     private boolean mSolved;
     private boolean mRequiresPolice;
 
-    public Crime(){
+    Crime(){
         mDate = new Date();
         mId = UUID.randomUUID();
     }
