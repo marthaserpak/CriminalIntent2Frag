@@ -6,6 +6,7 @@
     <string name="date">Date</string>
     <string name="call_police">Call Police!</string>
     <string name="requires_police">Requires Police</string>
+    <string name="btn_save">Save</string>
 
     <style name="enter_title">Enter a title for the crime</style>
 </resources>

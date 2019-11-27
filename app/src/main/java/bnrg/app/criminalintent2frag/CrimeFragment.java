@@ -30,6 +30,7 @@ public class CrimeFragment extends Fragment {
     private Button mDate;
     private CheckBox mRequiresPolice;
 
+
     public static CrimeFragment newInstance(UUID crimeId) {
 
         Bundle args = new Bundle();
@@ -53,7 +54,7 @@ public class CrimeFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater,
                              ViewGroup container,
-                             Bundle savedInstanceState) {
+                             final Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.fragment_crime,
                 container, false);
@@ -78,7 +79,7 @@ public class CrimeFragment extends Fragment {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                mCrime.setTitle(toString());
+                mCrime.setTitle("gggggggggggggggggggggggg");
             }
 
             @Override

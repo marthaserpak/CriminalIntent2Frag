@@ -22,7 +22,7 @@ class CrimeLab {
         mCrimes = new ArrayList<>();
         for (int i = 0; i<50; i++) {
             Crime crime = new Crime();
-            crime.setTitle("Crime # " + i);
+            crime.setTitle("crime # " + i);
             crime.setSolved(i % 2 == 0);
             crime.setRequiresPolice(i % 5 == 0);
             mCrimes.add(crime);
