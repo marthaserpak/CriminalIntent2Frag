@@ -25,13 +25,7 @@ public class CrimeFragment extends Fragment {
 
     private Crime mCrime;
 
-    private TextView mTitle, mDetails;
-    private EditText mEnterTitle;
-    private Button mDate;
-    private CheckBox mRequiresPolice;
-
-
-    public static CrimeFragment newInstance(UUID crimeId) {
+    static CrimeFragment newInstance(UUID crimeId) {
 
         Bundle args = new Bundle();
         args.putSerializable(Pref.ARG_CRIME_ID, crimeId);
@@ -46,9 +40,10 @@ public class CrimeFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        UUID crimeId = (UUID) getArguments().getSerializable(Pref.ARG_CRIME_ID);
-        mCrime = CrimeLab.get(getActivity()).getCrime(crimeId);
+        UUID crimeId = (UUID) getArguments()
+                .getSerializable(Pref.ARG_CRIME_ID);
 
+        mCrime = CrimeLab.get(getActivity()).getCrime(crimeId);
     }
 
     @Override
@@ -59,19 +54,21 @@ public class CrimeFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_crime,
                 container, false);
 
-        mTitle = view.findViewById(R.id.tv_title);
-
-        mEnterTitle = view.findViewById(R.id.et_title);
-        mDate = view.findViewById(R.id.tv_date);
-        mDetails = view.findViewById(R.id.tv_details);
+        TextView title = view.findViewById(R.id.tv_title);
+        EditText enterTitle = view.findViewById(R.id.et_title);
+        Button date = view.findViewById(R.id.tv_date);
+        TextView details = view.findViewById(R.id.tv_details);
         CheckBox solved = view.findViewById(R.id.chb_solved);
+        CheckBox requiresPolice = view.findViewById(R.id.chb_requires_police);
+        Button firstCrime = view.findViewById(R.id.btn_to_first_crime);
+        Button secondCrime = view.findViewById(R.id.btn_to_second_crime);
+
         solved.setChecked(mCrime.isSolved());
-        mRequiresPolice = view.findViewById(R.id.chb_requires_police);
-        mRequiresPolice.setChecked(mCrime.isRequiresPolice());
+        requiresPolice.setChecked(mCrime.isRequiresPolice());
 
-        mTitle.setText(mCrime.getTitle());
+        title.setText(mCrime.getTitle());
 
-        mEnterTitle.addTextChangedListener(new TextWatcher() {
+        enterTitle.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
@@ -95,7 +92,7 @@ public class CrimeFragment extends Fragment {
             }
         });
 
-        mRequiresPolice.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+        requiresPolice.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 mCrime.setRequiresPolice(isChecked);
@@ -104,9 +101,6 @@ public class CrimeFragment extends Fragment {
 
         return view;
     }
-
-
-
 
 }
 
