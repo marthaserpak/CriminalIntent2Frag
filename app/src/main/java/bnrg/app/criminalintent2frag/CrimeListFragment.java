@@ -36,7 +36,6 @@ public class CrimeListFragment extends Fragment {
         mRecyclerView = view.findViewById(R.id.recycler_view);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         mRecyclerView.setAdapter(createAdapter());
-        //createAdapter();
 
         return view;
     }
@@ -57,7 +56,9 @@ public class CrimeListFragment extends Fragment {
     }
 
     private void updateUI(){
+
         RecyclerView.Adapter adapter = mRecyclerView.getAdapter();
+
          if (mAdapter != null) {
              //TODO:mAdapter.notifyItemChanged(pos);
             mAdapter.notifyDataSetChanged();
