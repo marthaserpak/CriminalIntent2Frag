@@ -7,8 +7,10 @@
     <string name="call_police">Call Police!</string>
     <string name="requires_police">Requires Police</string>
     <string name="btn_save">Save</string>
-    <string name="to_first_crime">To the 1st Crime</string>
-    <string name="to_second_crime">To the 2nd Crime</string>
+    <string name="to_start_list">First Crime</string>
+    <string name="to_end_list">Last Crime</string>
+    <string name="to_start">To start</string>
+    <string name="to_end">To End</string>
 
     <style name="enter_title">Enter a title for the crime</style>
 </resources>

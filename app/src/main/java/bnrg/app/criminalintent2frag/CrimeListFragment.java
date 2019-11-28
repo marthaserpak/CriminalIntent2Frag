@@ -14,6 +14,7 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.viewpager.widget.ViewPager;
 
 import java.util.List;
 
@@ -25,10 +26,11 @@ import static bnrg.app.criminalintent2frag.Preferences.Pref.NOT_CALL_POLICE;
 
 public class CrimeListFragment extends Fragment {
 
+    private ViewPager mViewPager;
     private RecyclerView mRecyclerView;
     private RecyclerView.Adapter mAdapter;
     private List<Crime> mCrimes;
-    private static int mPos;
+    public static int mPos;
 
     @Override
     public View onCreateView(LayoutInflater inflater,
@@ -77,6 +79,8 @@ public class CrimeListFragment extends Fragment {
         private TextView title;
         private TextView date;
         private ImageView mSolved;
+        private Button mToStart;
+        private Button mToEnd;
 
         CrimeHolder(LayoutInflater inflater, ViewGroup parent) {
             super(inflater.inflate(R.layout.list_item_crime, parent, false));
@@ -86,9 +90,11 @@ public class CrimeListFragment extends Fragment {
             title = itemView.findViewById(R.id.tv_title);
             date = itemView.findViewById(R.id.tv_date);
             mSolved = itemView.findViewById(R.id.crime_solved);
+            mToStart = itemView.findViewById(R.id.to_start);
+            mToEnd = itemView.findViewById(R.id.to_end);
         }
 
-        private void bind(Crime crime) {
+        private void bind(final Crime crime) {
             mCrime = crime;
 
             Utilities.setItemColor(mCrime, itemView);
@@ -97,6 +103,20 @@ public class CrimeListFragment extends Fragment {
             date.setText(crime.getDate().toString());
             mSolved.setVisibility(crime.isSolved() ?
                     View.VISIBLE : View.GONE);
+
+            mToStart.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    mRecyclerView.smoothScrollToPosition(0);
+                }
+            });
+
+            mToEnd.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    mRecyclerView.smoothScrollToPosition(mCrimes.size());
+                }
+            });
         }
 
         @Override
@@ -114,6 +134,8 @@ public class CrimeListFragment extends Fragment {
         private TextView date;
         private Button police;
         private ImageView mSolvedImageView;
+        private Button mToStartPolice;
+        private Button mToEndPolice;
 
 
         PoliceHolder(LayoutInflater inflater, ViewGroup parent) {
@@ -125,6 +147,8 @@ public class CrimeListFragment extends Fragment {
             date = itemView.findViewById(R.id.tv_date_police);
             police = itemView.findViewById(R.id.bt_call_police);
             mSolvedImageView = itemView.findViewById(R.id.crime_solved_police);
+            mToStartPolice = itemView.findViewById(R.id.to_start_police);
+            mToEndPolice = itemView.findViewById(R.id.to_end_police);
 
         }
 
@@ -146,7 +170,22 @@ public class CrimeListFragment extends Fragment {
                 }
             });
 
-            mSolvedImageView.setVisibility(mCrime.isSolved() ? View.VISIBLE : View.GONE);
+            mSolvedImageView.setVisibility(mCrime.isSolved() ?
+                    View.VISIBLE : View.GONE);
+
+            mToEndPolice.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    mRecyclerView.smoothScrollToPosition(mCrimes.size());
+                }
+            });
+
+            mToStartPolice.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    mRecyclerView.smoothScrollToPosition(0);
+                }
+            });
         }
 
         @Override
@@ -193,7 +232,10 @@ public class CrimeListFragment extends Fragment {
         @Override
         public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
 
+            mPos = position;
+
             Crime crime = mCrimes.get(position);
+
 
             if (holder.getItemViewType() == CALL_POLICE) {
                 PoliceHolder policeHolder = (PoliceHolder) holder;

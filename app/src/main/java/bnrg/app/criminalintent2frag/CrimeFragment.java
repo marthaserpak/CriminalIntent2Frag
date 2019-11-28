@@ -1,5 +1,6 @@
 package bnrg.app.criminalintent2frag;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -13,6 +14,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
+import androidx.viewpager.widget.ViewPager;
 
 import java.util.List;
 import java.util.UUID;
@@ -20,10 +22,13 @@ import java.util.UUID;
 import bnrg.app.criminalintent2frag.Preferences.Pref;
 
 import static bnrg.app.criminalintent2frag.Preferences.Pref.ARG_CRIME_ID;
+import static bnrg.app.criminalintent2frag.Preferences.Pref.START_POSITION;
 
 public class CrimeFragment extends Fragment {
 
     private Crime mCrime;
+    private List<Crime> mCrimes;
+
 
     static CrimeFragment newInstance(UUID crimeId) {
 
@@ -60,8 +65,9 @@ public class CrimeFragment extends Fragment {
         TextView details = view.findViewById(R.id.tv_details);
         CheckBox solved = view.findViewById(R.id.chb_solved);
         CheckBox requiresPolice = view.findViewById(R.id.chb_requires_police);
-        Button firstCrime = view.findViewById(R.id.btn_to_first_crime);
-        Button secondCrime = view.findViewById(R.id.btn_to_second_crime);
+        Button firstCrime = view.findViewById(R.id.to_start_list);
+        Button lastCrime = view.findViewById(R.id.to_end_list);
+        Button save = view.findViewById(R.id.btn_save);
 
         solved.setChecked(mCrime.isSolved());
         requiresPolice.setChecked(mCrime.isRequiresPolice());
@@ -76,7 +82,7 @@ public class CrimeFragment extends Fragment {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                mCrime.setTitle("gggggg");
+                mCrime.setTitle(s.toString());
             }
 
             @Override
@@ -98,6 +104,37 @@ public class CrimeFragment extends Fragment {
                 mCrime.setRequiresPolice(isChecked);
             }
         });
+
+        save.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int position = CrimeListFragment.mPos;
+                Intent intent = CrimeListActivity.newIntent(getActivity(),
+                        mCrime.isRequiresPolice(),
+                        mCrime.isSolved(),
+                        position);
+                startActivity(intent);
+            }
+        });
+
+        //TODO: Util NullPointerException
+        /*firstCrime.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                final int START_POSITION = 0;
+                CrimePagerActivity.setViewPagerStart(START_POSITION);
+            }
+        });
+
+        lastCrime.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+               CrimePagerActivity.setViewPagerStart(mCrimes.size());
+            }
+        });*/
+
+
+
 
         return view;
     }
