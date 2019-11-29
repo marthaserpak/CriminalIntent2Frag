@@ -82,6 +82,7 @@ public class CrimeListFragment extends Fragment {
         private Button mToStart;
         private Button mToEnd;
 
+
         CrimeHolder(LayoutInflater inflater, ViewGroup parent) {
             super(inflater.inflate(R.layout.list_item_crime, parent, false));
 
@@ -165,7 +166,7 @@ public class CrimeListFragment extends Fragment {
                 public void onClick(View v) {
                     Toast.makeText(police.getContext(),
                             crime.getId().toString(),
-                            Toast.LENGTH_LONG)
+                            Toast.LENGTH_SHORT)
                             .show();
                 }
             });
@@ -176,6 +177,8 @@ public class CrimeListFragment extends Fragment {
             mToEndPolice.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    Toast.makeText(getContext(),"going to end..",
+                            Toast.LENGTH_SHORT).show();
                     mRecyclerView.smoothScrollToPosition(mCrimes.size());
                 }
             });
@@ -183,6 +186,8 @@ public class CrimeListFragment extends Fragment {
             mToStartPolice.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    Toast.makeText(getContext(),"going to start..",
+                            Toast.LENGTH_SHORT).show();
                     mRecyclerView.smoothScrollToPosition(0);
                 }
             });
@@ -192,12 +197,16 @@ public class CrimeListFragment extends Fragment {
         public void onClick(View v) {
             Intent intent = CrimeActivity.newIntent(getActivity(), mCrime.getId());
             startActivity(intent);
+            /*CrimeAdapter.mPos = getAdapterPosition();
+            Intent intent = CrimePagerActivity.newIntent(this.itemView.getContext(),
+                    this.mToEndPolice.getContext());*/
         }
     }
 
     private class CrimeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
         private List<Crime> mCrimes;
+        public int mPos;
 
         CrimeAdapter(List<Crime> crimes) {
             mCrimes = crimes;

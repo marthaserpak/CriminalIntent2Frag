@@ -1,5 +1,6 @@
 package bnrg.app.criminalintent2frag;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
@@ -14,21 +15,22 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
-import androidx.viewpager.widget.ViewPager;
+import androidx.fragment.app.FragmentManager;
 
+import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
 import bnrg.app.criminalintent2frag.Preferences.Pref;
-
-import static bnrg.app.criminalintent2frag.Preferences.Pref.ARG_CRIME_ID;
-import static bnrg.app.criminalintent2frag.Preferences.Pref.START_POSITION;
+import static bnrg.app.criminalintent2frag.Preferences.Pref.DIALOG_DATE;
+import static bnrg.app.criminalintent2frag.Preferences.Pref.REQUEST_DATE;
+import static bnrg.app.criminalintent2frag.Preferences.Pref.EXTRA_DATE;
 
 public class CrimeFragment extends Fragment {
 
     private Crime mCrime;
     private List<Crime> mCrimes;
-
+    private Button mDate;
 
     static CrimeFragment newInstance(UUID crimeId) {
 
@@ -61,18 +63,31 @@ public class CrimeFragment extends Fragment {
 
         TextView title = view.findViewById(R.id.tv_title);
         EditText enterTitle = view.findViewById(R.id.et_title);
-        Button date = view.findViewById(R.id.tv_date);
-        TextView details = view.findViewById(R.id.tv_details);
+        mDate = view.findViewById(R.id.tv_date);
+        //TextView details = view.findViewById(R.id.tv_details);
         CheckBox solved = view.findViewById(R.id.chb_solved);
         CheckBox requiresPolice = view.findViewById(R.id.chb_requires_police);
         Button firstCrime = view.findViewById(R.id.to_start_list);
         Button lastCrime = view.findViewById(R.id.to_end_list);
         Button save = view.findViewById(R.id.btn_save);
 
+        mDate.setText(mCrime.getDate().toString());
+        mDate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FragmentManager manager = getFragmentManager();
+                DatePickerFragment dialog = DatePickerFragment
+                        .newInstance(mCrime.getDate());
+                dialog.setTargetFragment(CrimeFragment.this,
+                        REQUEST_DATE);
+                dialog.show(manager, DIALOG_DATE);
+            }
+        });
+
         solved.setChecked(mCrime.isSolved());
         requiresPolice.setChecked(mCrime.isRequiresPolice());
 
-        title.setText(mCrime.getTitle());
+        updateDate(title, mCrime.getTitle());
 
         enterTitle.addTextChangedListener(new TextWatcher() {
             @Override
@@ -117,8 +132,7 @@ public class CrimeFragment extends Fragment {
             }
         });
 
-        //TODO: Util NullPointerException
-        /*firstCrime.setOnClickListener(new View.OnClickListener() {
+        firstCrime.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 final int START_POSITION = 0;
@@ -129,16 +143,29 @@ public class CrimeFragment extends Fragment {
         lastCrime.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-               CrimePagerActivity.setViewPagerStart(mCrimes.size());
+                CrimePagerActivity.setViewPagerStart(mCrimes.size());
             }
-        });*/
-
-
-
+        });
 
         return view;
     }
 
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if(resultCode != Activity.RESULT_OK) {
+            return;
+        }
+        if(requestCode == REQUEST_DATE) {
+            Date date = (Date) data
+                    .getSerializableExtra(EXTRA_DATE);
+            mCrime.setDate(date);
+            updateDate(mDate, mCrime.getDate().toString());
+        }
+    }
+
+    private void updateDate(TextView date2, String s) {
+        date2.setText(s);
+    }
 }
 
 

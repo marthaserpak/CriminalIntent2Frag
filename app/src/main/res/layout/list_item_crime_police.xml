@@ -11,8 +11,14 @@
         android:id="@+id/tv_title_police"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="505dp"
         android:text="@string/title"
-        android:textSize="18sp"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+        android:textSize="23sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -20,11 +26,11 @@
         android:id="@+id/tv_date_police"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
         android:text="@string/date"
-        android:textSize="15sp"
-        app:layout_constraintBottom_toTopOf="@+id/bt_call_police"
-        app:layout_constraintEnd_toStartOf="@+id/crime_solved_police"
-        app:layout_constraintHorizontal_bias="0.0"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+        android:textSize="23sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tv_title_police" />
 
@@ -33,7 +39,7 @@
         style="@style/Widget.AppCompat.Button.Colored"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="28dp"
+        android:layout_marginTop="48dp"
         android:text="@string/call_police"
         android:textColorHint="#00541010"
         android:textColorLink="#FCE4EC"
@@ -48,27 +54,31 @@
         android:layout_height="42dp"
         android:layout_marginStart="288dp"
         android:layout_marginEnd="4dp"
-        android:layout_marginBottom="64dp"
+        android:layout_marginBottom="96dp"
         android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.478"
+        app:layout_constraintHorizontal_bias="0.927"
         app:layout_constraintStart_toEndOf="@+id/tv_title_police"
         app:srcCompat="@drawable/ic_solved" />
 
     <Button
         android:id="@+id/to_start_police"
+        style="@style/Widget.AppCompat.Button.Borderless"
         android:layout_width="75dp"
         android:layout_height="39dp"
+        android:layout_marginStart="8dp"
         android:layout_marginTop="48dp"
         android:text="@string/to_start"
         android:textSize="10sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/bt_call_police" />
+        app:layout_constraintTop_toTopOf="@+id/bt_call_police"
+        app:layout_constraintVertical_bias="0.0" />
 
     <Button
         android:id="@+id/to_end_police"
+        style="@style/Widget.AppCompat.Button.Borderless"
         android:layout_width="75dp"
         android:layout_height="39dp"
         android:layout_marginStart="292dp"
@@ -76,7 +86,7 @@
         android:textSize="10sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintHorizontal_bias="0.969"
         app:layout_constraintStart_toStartOf="@+id/bt_call_police"
         app:layout_constraintTop_toTopOf="@+id/crime_solved_police"
         app:layout_constraintVertical_bias="1.0" />

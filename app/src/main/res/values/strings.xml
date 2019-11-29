@@ -11,6 +11,7 @@
     <string name="to_end_list">Last Crime</string>
     <string name="to_start">To start</string>
     <string name="to_end">To End</string>
+    <string name="date_picker_title">Date of crime:</string>
 
     <style name="enter_title">Enter a title for the crime</style>
 </resources>
