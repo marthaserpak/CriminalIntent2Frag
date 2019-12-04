@@ -12,6 +12,13 @@
     <string name="to_start">To start</string>
     <string name="to_end">To End</string>
     <string name="date_picker_title">Date of crime:</string>
+    <string name="time_picker_title">Time of Crime:</string>
+    <string name="crime_description">Crime Description..</string>
+    <string name="dialog_time_picker">Time of crime:</string>
+    <string name="new_crime">New Crime</string>
+    <string name="show_subtitle">Show Subtitle</string>
+    <string name="hide_subtitle">Hide Subtitle</string>
+    <string name="subtitle_format">%1$d crimes</string>
 
     <style name="enter_title">Enter a title for the crime</style>
 </resources>

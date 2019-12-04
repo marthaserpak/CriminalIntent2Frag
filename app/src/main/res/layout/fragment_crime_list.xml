@@ -8,4 +8,5 @@
     android:id="@+id/recycler_view"
     android:layout_margin="5dp">
 
+
 </androidx.recyclerview.widget.RecyclerView>

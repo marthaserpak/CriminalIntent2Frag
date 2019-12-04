@@ -20,14 +20,17 @@ class CrimeLab {
 
     private CrimeLab(Context context){
         mCrimes = new ArrayList<>();
-        for (int i = 0; i<50; i++) {
+        for (int i = 0; i<17; i++) {
             Crime crime = new Crime();
             crime.setTitle("crime # " + i);
             crime.setSolved(i % 2 == 0);
             crime.setRequiresPolice(i % 5 == 0);
             mCrimes.add(crime);
-
         }
+    }
+
+    public void addCrime(Crime c) {
+        mCrimes.add(c);
     }
 
     public List<Crime> getCrimes(){

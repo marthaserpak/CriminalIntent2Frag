@@ -1,5 +1,6 @@
 package bnrg.app.criminalintent2frag;
 
+import java.sql.Time;
 import java.util.Date;
 import java.util.UUID;
 
@@ -8,8 +9,10 @@ public class Crime {
     private String mTitle;
     private UUID mId;
     private Date mDate;
+    private Date mTime;
     private boolean mSolved;
     private boolean mRequiresPolice;
+
 
     Crime(){
         mDate = new Date();
@@ -50,5 +53,13 @@ public class Crime {
 
     public void setRequiresPolice(boolean requiresPolice) {
         mRequiresPolice = requiresPolice;
+    }
+
+    public Date getTime() {
+        return mTime;
+    }
+
+    public void setTime(Date time) {
+        mTime = time;
     }
 }

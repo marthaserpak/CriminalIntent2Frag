@@ -19,6 +19,8 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 
 
+import bnrg.app.criminalintent2frag.Preferences.Pref;
+
 import static bnrg.app.criminalintent2frag.Preferences.Pref.ARG_DATE;
 import static bnrg.app.criminalintent2frag.Preferences.Pref.EXTRA_DATE;
 
@@ -37,8 +39,10 @@ public class DatePickerFragment extends DialogFragment {
     @Override
     public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
 
-        Date date = (Date) getArguments().getSerializable(ARG_DATE);
-        Calendar calendar = Calendar.getInstance();
+        assert getArguments() != null;
+        Date date = (Date) getArguments().getSerializable(Pref.ARG_DATE);
+
+        final Calendar calendar = Calendar.getInstance();
         calendar.setTime(date);
         int year = calendar.get(Calendar.YEAR);
         int month = calendar.get(Calendar.MONTH);
