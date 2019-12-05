@@ -33,6 +33,11 @@ class CrimeLab {
         mCrimes.add(c);
     }
 
+    public void deleteCrime(UUID crimeId){
+        Crime crime = getCrime(crimeId);
+        mCrimes.remove(crime);
+    }
+
     public List<Crime> getCrimes(){
         return mCrimes;
     }

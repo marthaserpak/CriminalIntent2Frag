@@ -49,7 +49,7 @@ public class CrimeListFragment extends Fragment {
                              ViewGroup container,
                              Bundle savedInstanceState) {
 
-        if(savedInstanceState !=  null) {
+        if (savedInstanceState != null) {
             mSubtitleVisible = savedInstanceState
                     .getBoolean(SAVED_SUBTITLE_VISIBLE);
         }
@@ -109,7 +109,7 @@ public class CrimeListFragment extends Fragment {
         int crimeCount = crimeLab.getCrimes().size();
         String subtitle = getString(R.string.subtitle_format, crimeCount);
 
-        if( !mSubtitleVisible) {
+        if (!mSubtitleVisible) {
             subtitle = null;
         }
 
@@ -147,13 +147,12 @@ public class CrimeListFragment extends Fragment {
         updateSubtitle();
     }
 
-
     public class CrimeHolder extends RecyclerView.ViewHolder
             implements View.OnClickListener {
 
         private Crime mCrime;
         private TextView title;
-        private TextView date;
+        private TextView mDate;
         private ImageView mSolved;
         private Button mToStart;
         private Button mToEnd;
@@ -166,7 +165,7 @@ public class CrimeListFragment extends Fragment {
 
             title = itemView.findViewById(R.id.tv_title);
 
-            date = itemView.findViewById(R.id.tv_date);
+            mDate = itemView.findViewById(R.id.tv_date);
             mSolved = itemView.findViewById(R.id.crime_solved);
             mToStart = itemView.findViewById(R.id.to_start);
             mToEnd = itemView.findViewById(R.id.to_end);
@@ -178,7 +177,10 @@ public class CrimeListFragment extends Fragment {
             Utilities.setItemColor(mCrime, itemView);
 
             title.setText(crime.getTitle());
-            date.setText(crime.getDate().toString());
+
+            SimpleDateFormat format = new SimpleDateFormat("EEE, MMM d, ''yy" );
+            mDate.setText(format.format(crime.getDate()));
+
             mSolved.setVisibility(crime.isSolved() ?
                     View.VISIBLE : View.GONE);
 
@@ -237,7 +239,10 @@ public class CrimeListFragment extends Fragment {
             Utilities.setItemColor(mCrime, itemView);
 
             title.setText(crime.getTitle());
-            date.setText(crime.getDate().toString());
+
+            SimpleDateFormat format = new SimpleDateFormat("EEE, MMM d, ''yy" );
+            date.setText(format.format(crime.getDate()));
+
             police.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

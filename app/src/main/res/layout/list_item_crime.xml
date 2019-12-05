@@ -28,8 +28,8 @@
     <TextView
         android:id="@+id/tv_date"
         style="@android:style/Widget.Holo.Light.TextView"
-        android:layout_width="49dp"
-        android:layout_height="31dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginTop="12dp"
         android:text="@string/date"

@@ -3,6 +3,9 @@ package bnrg.app.criminalintent2frag.Utils;
 import android.graphics.Color;
 import android.view.View;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 import bnrg.app.criminalintent2frag.Crime;
 
 public class Utilities {
@@ -13,6 +16,12 @@ public class Utilities {
         } else {
             itemView.setBackgroundColor(Color.parseColor("#FFFCE4EC"));
         }
+    }
+
+    public static void getFormattedDate(Date mDate) {
+        SimpleDateFormat formatter = new SimpleDateFormat("EEE, MMM d, ''yy");
+        Date date  =  new Date();
+        formatter.format(date);
     }
 
 

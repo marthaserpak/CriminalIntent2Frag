@@ -24,11 +24,12 @@
 
     <TextView
         android:id="@+id/tv_date_police"
+        style="@android:style/Widget.Holo.Light.TextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:text="@string/date"
+        android:layout_marginTop="12dp"
+        android:text="@string/date_police"
         android:textAppearance="@style/TextAppearance.AppCompat.Body1"
         android:textSize="23sp"
         app:layout_constraintStart_toStartOf="parent"
