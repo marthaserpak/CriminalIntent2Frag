@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.TimeFormatException;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -16,17 +17,23 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.TimePicker;
+import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
 import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.UUID;
 
 import bnrg.app.criminalintent2frag.Preferences.Pref;
+import bnrg.app.criminalintent2frag.Utils.Utilities;
 
 import static bnrg.app.criminalintent2frag.Preferences.Pref.DIALOG_DATE;
 import static bnrg.app.criminalintent2frag.Preferences.Pref.DIALOG_TIME;
@@ -42,7 +49,6 @@ public class CrimeFragment extends Fragment {
     private Button mDateButton;
     private Button mTimeButton;
 
-
     static CrimeFragment newInstance(UUID crimeId) {
 
         Bundle args = new Bundle();
@@ -57,9 +63,9 @@ public class CrimeFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         setHasOptionsMenu(true);
 
+        assert getArguments() != null;
         UUID crimeId = (UUID) getArguments()
                 .getSerializable(Pref.ARG_CRIME_ID);
 
@@ -67,25 +73,21 @@ public class CrimeFragment extends Fragment {
     }
 
     @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater menuInflater) {
+    public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater menuInflater) {
         super.onCreateOptionsMenu(menu, menuInflater);
         menuInflater.inflate(R.menu.delete_crime_menu, menu);
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-
-            case R.id.delete_crime:
-                CrimeLab crimeLab = CrimeLab.get(getActivity());
-                crimeLab.deleteCrime(mCrime.getId());
-                Intent intent = new Intent(getActivity(), CrimeListActivity.class);
-                startActivity(intent);
-                return true;
-
-            default:
-                return super.onOptionsItemSelected(item);
+        if (item.getItemId() == R.id.delete_crime) {
+            CrimeLab crimeLab = CrimeLab.get(getActivity());
+            crimeLab.deleteCrime(mCrime.getId());
+            Intent intent = new Intent(getActivity(), CrimeListActivity.class);
+            startActivity(intent);
+            return true;
         }
+        return super.onOptionsItemSelected(item);
     }
 
     @Override
@@ -105,8 +107,10 @@ public class CrimeFragment extends Fragment {
         mDateButton = view.findViewById(R.id.tv_date);
         mTimeButton = view.findViewById(R.id.btn_time);
 
-        final DateFormat df = DateFormat.getDateInstance(DateFormat.MEDIUM);
-        mDateButton.setText(df.format(mCrime.getDate()));
+        mDateButton.setText(Utilities.getFormattedDate(mCrime.getDate()));
+        mTimeButton.setText(Utilities.getFormattedTime(mCrime.getDate()));
+        enterTitle.setText(mCrime.getTitle());
+
         mDateButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -119,22 +123,25 @@ public class CrimeFragment extends Fragment {
                 dialog.show(manager, DIALOG_DATE);
             }
         });
-        updateDate(enterTitle, mCrime.getTitle());
 
-        //TODO: setTextOnTimeButton
-        Date date = Calendar.getInstance().getTime();
-        mTimeButton.setText(date.toString());
         mTimeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                FragmentManager fragmentManager = getFragmentManager();
+                /*           2.Добавляем экз DialogFrag во фрагмент   */
+                FragmentManager manager = getFragmentManager();
+                /*3.Созд конст для метки TimePickerFrag и
+                    метод show(), который отображает диал. окно*/
                 TimePickerFragment dialog = TimePickerFragment
-                        .newInstance(mCrime.getDate());
+                        .newInstanceTime(mCrime.getDate()); /*6.Меняем вызов констр на метод NewIns()*/
+                /*10.Для создания связи между 2мя фрагментами устанавлив метод
+                getTargetFragment(Fragment fragment, int requestCode) - метод получает целевой фраг
+                              и код запроса; Создаем константу REQUEST_TIME
+                 и назначаем CrimeFrag целев фрагментом экземплляра TimePickerFrag.*/
                 dialog.setTargetFragment(CrimeFragment.this, REQUEST_TIME);
-                dialog.show(fragmentManager, DIALOG_TIME);
+                assert manager != null;
+                dialog.show(manager, DIALOG_TIME);
             }
         });
-
 
         enterTitle.addTextChangedListener(new TextWatcher() {
             @Override
@@ -195,34 +202,34 @@ public class CrimeFragment extends Fragment {
                 CrimePagerActivity.setViewPagerStart(mCrimes.size());
             }
         });
-
         return view;
     }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (resultCode != Activity.RESULT_OK) {
-            return;
-        }
-        if (requestCode == REQUEST_DATE) {
-            Date date = (Date) data
-                    .getSerializableExtra(EXTRA_DATE);
-            mCrime.setDate(date);
-            updateDate(mDateButton, mCrime.getDate().toString());
-        }
-        if (requestCode == REQUEST_TIME) {
-            Date time = (Date) data
-                    .getSerializableExtra(EXTRA_TIME);
-            mCrime.setTime(time);
-            mTimeButton.setText(mCrime.getTime().toString());
+        switch (requestCode) {
+
+            case REQUEST_DATE:
+                if (resultCode != Activity.RESULT_OK) {
+                    return;
+                }
+                Date date = (Date) data
+                        .getSerializableExtra(EXTRA_DATE);
+                mCrime.setDate(date);
+                mDateButton.setText(Utilities.getFormattedDate(date));
+
+            case REQUEST_TIME:
+                if (resultCode != Activity.RESULT_OK) {
+                    return;
+                }
+                if (requestCode == REQUEST_TIME) {
+                    Date mDate = (Date) data
+                            .getSerializableExtra(EXTRA_TIME);
+                    mCrime.setTime(mDate);
+                    mTimeButton.setText(Utilities.getFormattedTime(mDate));
+                }
         }
     }
-
-
-    private void updateDate(TextView date2, String s) {
-        date2.setText(s);
-    }
-
 }
 
 

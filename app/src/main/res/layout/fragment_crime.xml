@@ -14,12 +14,12 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/title"
-        android:textSize="12sp" />
+        android:textSize="15sp" />
 
     <EditText
         android:id="@+id/et_title"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="50dp"
         android:hint="Enter a title for the crime.."
         android:inputType="text"
         android:textSize="18sp" />
@@ -30,7 +30,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/details"
-        android:textSize="12sp" />
+        android:textSize="15sp" />
 
 
     <EditText
@@ -38,6 +38,7 @@
         android:layout_width="match_parent"
         android:layout_height="200dp"
         android:layout_margin="20dp"
+
         android:hint="@string/crime_description" />
 
     <LinearLayout
@@ -47,19 +48,20 @@
 
         <Button
             android:id="@+id/tv_date"
+            style="@style/Widget.AppCompat.Button.Borderless"
             android:layout_width="256dp"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:textSize="20sp" />
 
         <Button
             android:id="@+id/btn_time"
+            style="@style/Widget.AppCompat.Button.Borderless"
             android:layout_width="256dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="60dp"/>
+            android:layout_marginStart="60dp"
+            android:textSize="20sp"/>
 
     </LinearLayout>
-
-
-
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -71,14 +73,16 @@
             android:id="@+id/chb_requires_police"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textSize="17sp"
             android:text="@string/requires_police" />
 
 
         <CheckBox
             android:id="@+id/chb_solved"
-            android:layout_marginStart="320dp"
+            android:layout_marginStart="300dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textSize="17sp"
             android:text="@string/Solved" />
 
     </LinearLayout>

@@ -5,6 +5,7 @@ import android.view.View;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Locale;
 
 import bnrg.app.criminalintent2frag.Crime;
 
@@ -18,11 +19,17 @@ public class Utilities {
         }
     }
 
-    public static void getFormattedDate(Date mDate) {
-        SimpleDateFormat formatter = new SimpleDateFormat("EEE, MMM d, ''yy");
-        Date date  =  new Date();
-        formatter.format(date);
+    public static String getFormattedDate(Date date) {
+        SimpleDateFormat formatter = new SimpleDateFormat( "EEE , MMM d, ''yy",
+                Locale.getDefault());
+
+        return formatter.format(date);
     }
 
+    public static String getFormattedTime(Date date) {
+        SimpleDateFormat formatter = new SimpleDateFormat("hh:mm:ss a",
+                Locale.getDefault());
 
+        return  formatter.format(date);
+    }
 }

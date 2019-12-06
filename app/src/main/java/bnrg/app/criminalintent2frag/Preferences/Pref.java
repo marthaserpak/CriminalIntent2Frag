@@ -6,7 +6,7 @@ public interface Pref {
     int NOT_CALL_POLICE = 0;
     int CALL_POLICE = 1;
     int REQUEST_DATE = 0;
-    int REQUEST_TIME = 0;
+    int REQUEST_TIME = 1;
 
     //EXTRA
     String EXTRA_CRIME_ID = "extra_crime_id";
