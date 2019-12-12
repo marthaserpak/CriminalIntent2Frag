@@ -1,4 +1,4 @@
-package bnrg.app.criminalintent2frag;
+package bnrg.app.criminalintent2frag.Dialogs;
 
 import android.app.Activity;
 import android.app.Dialog;
@@ -19,14 +19,15 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 
 
-import bnrg.app.criminalintent2frag.Preferences.Pref;
+import bnrg.app.criminalintent2frag.R;
+import bnrg.app.criminalintent2frag.Utils.Pref;
 
-import static bnrg.app.criminalintent2frag.Preferences.Pref.ARG_DATE;
-import static bnrg.app.criminalintent2frag.Preferences.Pref.EXTRA_DATE;
+import static bnrg.app.criminalintent2frag.Utils.Pref.ARG_DATE;
+import static bnrg.app.criminalintent2frag.Utils.Pref.EXTRA_DATE;
 
 public class DatePickerFragment extends DialogFragment {
 
-    static DatePickerFragment newInstance(Date date) {
+    public static DatePickerFragment newInstance(Date date) {
         Bundle args = new Bundle();
         args.putSerializable(ARG_DATE, date);
 
@@ -72,8 +73,6 @@ public class DatePickerFragment extends DialogFragment {
                             }
                         })
                 .create();
-
-
     }
 
     private void sendResult(int resultCode, Date date) {

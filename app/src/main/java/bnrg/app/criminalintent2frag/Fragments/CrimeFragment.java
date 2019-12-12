@@ -1,11 +1,10 @@
-package bnrg.app.criminalintent2frag;
+package bnrg.app.criminalintent2frag.Fragments;
 
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.TimeFormatException;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -16,31 +15,33 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
-import android.widget.TextView;
-import android.widget.TimePicker;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.Date;
-import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.UUID;
 
-import bnrg.app.criminalintent2frag.Preferences.Pref;
+import bnrg.app.criminalintent2frag.Activities.Crime;
+
+import bnrg.app.criminalintent2frag.Activities.CrimeListActivity;
+import bnrg.app.criminalintent2frag.Activities.CrimePagerActivity;
+import bnrg.app.criminalintent2frag.Dialogs.DatePickerFragment;
+import bnrg.app.criminalintent2frag.R;
+
+import bnrg.app.criminalintent2frag.Singletone.CrimeLab;
+import bnrg.app.criminalintent2frag.Dialogs.TimePickerFragment;
+import bnrg.app.criminalintent2frag.Utils.Pref;
 import bnrg.app.criminalintent2frag.Utils.Utilities;
 
-import static bnrg.app.criminalintent2frag.Preferences.Pref.DIALOG_DATE;
-import static bnrg.app.criminalintent2frag.Preferences.Pref.DIALOG_TIME;
-import static bnrg.app.criminalintent2frag.Preferences.Pref.EXTRA_TIME;
-import static bnrg.app.criminalintent2frag.Preferences.Pref.REQUEST_DATE;
-import static bnrg.app.criminalintent2frag.Preferences.Pref.EXTRA_DATE;
-import static bnrg.app.criminalintent2frag.Preferences.Pref.REQUEST_TIME;
+import static bnrg.app.criminalintent2frag.Utils.Pref.DIALOG_DATE;
+import static bnrg.app.criminalintent2frag.Utils.Pref.DIALOG_TIME;
+import static bnrg.app.criminalintent2frag.Utils.Pref.EXTRA_TIME;
+import static bnrg.app.criminalintent2frag.Utils.Pref.REQUEST_DATE;
+import static bnrg.app.criminalintent2frag.Utils.Pref.EXTRA_DATE;
+import static bnrg.app.criminalintent2frag.Utils.Pref.REQUEST_TIME;
 
 public class CrimeFragment extends Fragment {
 
@@ -49,7 +50,8 @@ public class CrimeFragment extends Fragment {
     private Button mDateButton;
     private Button mTimeButton;
 
-    static CrimeFragment newInstance(UUID crimeId) {
+
+    public static CrimeFragment newInstance(UUID crimeId) {
 
         Bundle args = new Bundle();
         args.putSerializable(Pref.ARG_CRIME_ID, crimeId);
@@ -82,7 +84,7 @@ public class CrimeFragment extends Fragment {
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == R.id.delete_crime) {
             CrimeLab crimeLab = CrimeLab.get(getActivity());
-            crimeLab.deleteCrime(mCrime.getId());
+            CrimeLab.deleteCrime(mCrime.getId());
             Intent intent = new Intent(getActivity(), CrimeListActivity.class);
             startActivity(intent);
             return true;
@@ -101,8 +103,8 @@ public class CrimeFragment extends Fragment {
         EditText enterTitle = view.findViewById(R.id.et_title);
         CheckBox solved = view.findViewById(R.id.chb_solved);
         CheckBox requiresPolice = view.findViewById(R.id.chb_requires_police);
-        Button firstCrime = view.findViewById(R.id.to_start_list);
-        Button lastCrime = view.findViewById(R.id.to_end_list);
+        /*Button firstCrime = view.findViewById(R.id.to_start_list);
+        Button lastCrime = view.findViewById(R.id.to_end_list);*/
         Button save = view.findViewById(R.id.btn_save);
         mDateButton = view.findViewById(R.id.tv_date);
         mTimeButton = view.findViewById(R.id.btn_time);
@@ -146,7 +148,6 @@ public class CrimeFragment extends Fragment {
         enterTitle.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
             }
 
             @Override
@@ -188,7 +189,7 @@ public class CrimeFragment extends Fragment {
             }
         });
 
-        firstCrime.setOnClickListener(new View.OnClickListener() {
+        /*firstCrime.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 final int START_POSITION = 0;
@@ -201,7 +202,7 @@ public class CrimeFragment extends Fragment {
             public void onClick(View v) {
                 CrimePagerActivity.setViewPagerStart(mCrimes.size());
             }
-        });
+        });*/
         return view;
     }
 

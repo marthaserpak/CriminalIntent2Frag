@@ -1,4 +1,4 @@
-package bnrg.app.criminalintent2frag;
+package bnrg.app.criminalintent2frag.Activities;
 
 import java.sql.Time;
 import java.util.Date;
@@ -14,7 +14,7 @@ public class Crime {
     private boolean mRequiresPolice;
 
 
-    Crime(){
+    public Crime(){
         mDate = new Date();
         mId = UUID.randomUUID();
     }

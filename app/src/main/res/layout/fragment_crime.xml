@@ -36,9 +36,9 @@
     <EditText
         android:id="@+id/et_details_description"
         android:layout_width="match_parent"
-        android:layout_height="200dp"
+        android:layout_height="270dp"
         android:layout_margin="20dp"
-
+        android:gravity="top"
         android:hint="@string/crime_description" />
 
     <LinearLayout
@@ -58,7 +58,7 @@
             style="@style/Widget.AppCompat.Button.Borderless"
             android:layout_width="256dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="60dp"
+            android:layout_marginStart="429dp"
             android:textSize="20sp"/>
 
     </LinearLayout>
@@ -79,7 +79,7 @@
 
         <CheckBox
             android:id="@+id/chb_solved"
-            android:layout_marginStart="300dp"
+            android:layout_marginStart="655dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="17sp"
@@ -95,10 +95,11 @@
         <Button
             android:id="@+id/btn_save"
             android:layout_width="68dp"
+            android:layout_marginStart="450dp"
             android:layout_height="match_parent"
             android:text="@string/btn_save" />
 
-        <Button
+        <!--<Button
             android:id="@+id/to_start_list"
             style="@style/Widget.AppCompat.Button.Borderless"
             android:layout_width="84dp"
@@ -112,7 +113,7 @@
             style="@style/Widget.AppCompat.Button.Borderless"
             android:layout_width="wrap_content"
             android:layout_height="61dp"
-            android:text="@string/to_end_list" />
+            android:text="@string/to_end_list" />-->
 
 
     </LinearLayout>

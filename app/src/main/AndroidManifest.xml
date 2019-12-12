@@ -12,18 +12,18 @@
         android:theme="@style/Theme.AppCompat.DayNight.DarkActionBar"
         tools:ignore="GoogleAppIndexingWarning">
         <activity
-            android:name=".CrimePagerActivity"
-            android:parentActivityName=".CrimeListActivity">
+            android:name=".Activities.CrimePagerActivity"
+            android:parentActivityName=".Activities.CrimeListActivity">
         </activity>
 
-        <activity android:name=".CrimeListActivity">
+        <activity android:name=".Activities.CrimeListActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".CrimeActivity"></activity>
+        <activity android:name=".Activities.CrimeActivity"></activity>
     </application>
 
 </manifest>

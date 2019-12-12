@@ -7,7 +7,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 
-import bnrg.app.criminalintent2frag.Crime;
+import bnrg.app.criminalintent2frag.Activities.Crime;
 
 public class Utilities {
 

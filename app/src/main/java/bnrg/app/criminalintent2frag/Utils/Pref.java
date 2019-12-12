@@ -1,4 +1,4 @@
-package bnrg.app.criminalintent2frag.Preferences;
+package bnrg.app.criminalintent2frag.Utils;
 
 public interface Pref {
 

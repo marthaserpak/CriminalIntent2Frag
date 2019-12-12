@@ -1,4 +1,4 @@
-package bnrg.app.criminalintent2frag;
+package bnrg.app.criminalintent2frag.Dialogs;
 
 import android.app.Activity;
 import android.app.Dialog;
@@ -17,13 +17,15 @@ import androidx.fragment.app.DialogFragment;
 import java.util.Calendar;
 import java.util.Date;
 
-import static bnrg.app.criminalintent2frag.Preferences.Pref.ARG_TIME;
-import static bnrg.app.criminalintent2frag.Preferences.Pref.EXTRA_TIME;
+import bnrg.app.criminalintent2frag.R;
+
+import static bnrg.app.criminalintent2frag.Utils.Pref.ARG_TIME;
+import static bnrg.app.criminalintent2frag.Utils.Pref.EXTRA_TIME;
 
 public class TimePickerFragment extends DialogFragment {
 
     //5.Чтобы передать время преступл. создаем метод NewInstance()
-    static TimePickerFragment newInstanceTime(Date date) {
+    public static TimePickerFragment newInstanceTime(Date date) {
         Bundle args = new Bundle();
         args.putSerializable(ARG_TIME, date);
         TimePickerFragment timeFragment = new TimePickerFragment();

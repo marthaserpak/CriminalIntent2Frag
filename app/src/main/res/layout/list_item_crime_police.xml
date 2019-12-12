@@ -55,11 +55,11 @@
         android:layout_height="42dp"
         android:layout_marginStart="288dp"
         android:layout_marginEnd="4dp"
-        android:layout_marginBottom="96dp"
+        android:layout_marginBottom="92dp"
         android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.927"
+        app:layout_constraintHorizontal_bias="0.878"
         app:layout_constraintStart_toEndOf="@+id/tv_title_police"
         app:srcCompat="@drawable/ic_solved" />
 

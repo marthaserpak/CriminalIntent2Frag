@@ -1,4 +1,4 @@
-package bnrg.app.criminalintent2frag;
+package bnrg.app.criminalintent2frag.Activities;
 
 import androidx.fragment.app.Fragment;
 
@@ -7,9 +7,10 @@ import android.content.Intent;
 
 import java.util.UUID;
 
-import bnrg.app.criminalintent2frag.Preferences.Pref;
+import bnrg.app.criminalintent2frag.Fragments.CrimeFragment;
+import bnrg.app.criminalintent2frag.Abstracts.SingleFragmentActivity;
 
-import static bnrg.app.criminalintent2frag.Preferences.Pref.EXTRA_CRIME_ID;
+import static bnrg.app.criminalintent2frag.Utils.Pref.EXTRA_CRIME_ID;
 
 
 public class CrimeActivity extends SingleFragmentActivity {

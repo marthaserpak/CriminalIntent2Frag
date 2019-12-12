@@ -1,4 +1,4 @@
-package bnrg.app.criminalintent2frag;
+package bnrg.app.criminalintent2frag.Singletone;
 
 import android.content.Context;
 
@@ -6,12 +6,14 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-class CrimeLab {
+import bnrg.app.criminalintent2frag.Activities.Crime;
+
+public class CrimeLab {
 
     private static CrimeLab sCrimeLab;
-    private List<Crime> mCrimes;
+    private static List<Crime> mCrimes;
 
-    static CrimeLab get(Context context){
+    public static CrimeLab get(Context context){
         if (sCrimeLab == null) {
             sCrimeLab = new CrimeLab(context);
         }
@@ -33,7 +35,7 @@ class CrimeLab {
         mCrimes.add(c);
     }
 
-    public void deleteCrime(UUID crimeId){
+    public static void deleteCrime(UUID crimeId){
         Crime crime = getCrime(crimeId);
         mCrimes.remove(crime);
     }
@@ -42,7 +44,7 @@ class CrimeLab {
         return mCrimes;
     }
 
-    public Crime getCrime(UUID id){
+    public static Crime getCrime(UUID id){
         for (Crime crime : mCrimes) {
             if(crime.getId().equals(id)){
              return crime;

@@ -21,6 +21,7 @@
     <string name="hide_subtitle">Hide Subtitle</string>
     <string name="subtitle_format">%1$d crimes</string>
     <string name="delete_crime">Delete Crime</string>
+    <string name="add_first_crime">\t\t\t"''CLICK''"\nto add first crime</string>
 
     <style name="enter_title">Enter a title for the crime</style>
 </resources>
