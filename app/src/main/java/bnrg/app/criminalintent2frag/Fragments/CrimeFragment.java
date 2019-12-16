@@ -1,6 +1,7 @@
 package bnrg.app.criminalintent2frag.Fragments;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
@@ -27,8 +28,8 @@ import java.util.UUID;
 import bnrg.app.criminalintent2frag.Activities.Crime;
 
 import bnrg.app.criminalintent2frag.Activities.CrimeListActivity;
-import bnrg.app.criminalintent2frag.Activities.CrimePagerActivity;
 import bnrg.app.criminalintent2frag.Dialogs.DatePickerFragment;
+import bnrg.app.criminalintent2frag.Interfaces.Callbacks;
 import bnrg.app.criminalintent2frag.R;
 
 import bnrg.app.criminalintent2frag.Singletone.CrimeLab;
@@ -49,7 +50,7 @@ public class CrimeFragment extends Fragment {
     private List<Crime> mCrimes;
     private Button mDateButton;
     private Button mTimeButton;
-
+    private Callbacks mCallbacks;
 
     public static CrimeFragment newInstance(UUID crimeId) {
 
@@ -60,6 +61,12 @@ public class CrimeFragment extends Fragment {
         fragment.setArguments(args);
 
         return fragment;
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        mCallbacks = (Callbacks)context;
     }
 
     @Override
@@ -153,6 +160,7 @@ public class CrimeFragment extends Fragment {
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 mCrime.setTitle(s.toString());
+                updateCrime();
             }
 
             @Override
@@ -166,6 +174,7 @@ public class CrimeFragment extends Fragment {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 mCrime.setSolved(isChecked);
+                updateCrime();
             }
         });
 
@@ -174,6 +183,7 @@ public class CrimeFragment extends Fragment {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 mCrime.setRequiresPolice(isChecked);
+                updateCrime();
             }
         });
 
@@ -217,6 +227,7 @@ public class CrimeFragment extends Fragment {
                 Date date = (Date) data
                         .getSerializableExtra(EXTRA_DATE);
                 mCrime.setDate(date);
+                updateCrime();
                 mDateButton.setText(Utilities.getFormattedDate(date));
 
             case REQUEST_TIME:
@@ -227,9 +238,26 @@ public class CrimeFragment extends Fragment {
                     Date mDate = (Date) data
                             .getSerializableExtra(EXTRA_TIME);
                     mCrime.setTime(mDate);
+                    updateCrime();
                     mTimeButton.setText(Utilities.getFormattedTime(mDate));
                 }
         }
+    }
+    private void  updateCrime() {
+        CrimeLab.get(getActivity()).updateCrime(mCrime);
+        mCallbacks.onCrimeUpdated(mCrime);
+    }
+
+
+    public interface Callbacks {
+        void onCrimeUpdated(Crime crime);
+    }
+
+
+    @Override
+    public void onDetach(){
+        super.onDetach();
+        mCallbacks = null;
     }
 }
 

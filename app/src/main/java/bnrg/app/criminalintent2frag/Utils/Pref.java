@@ -26,4 +26,8 @@ public interface Pref {
     String DIALOG_DATE = "DialogDate";
     String SAVED_SUBTITLE_VISIBLE = "subtitle";
 
+    //Database
+    int VERSION = 1;
+    String DATABASE_NAME = "crimeBase.db";
+
 }

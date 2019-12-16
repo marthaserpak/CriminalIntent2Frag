@@ -1,7 +1,6 @@
 package bnrg.app.criminalintent2frag.Fragments;
 
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -20,15 +19,11 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import androidx.viewpager.widget.ViewPager;
 
-import java.text.SimpleDateFormat;
 import java.util.List;
 
 import bnrg.app.criminalintent2frag.Activities.Crime;
-import bnrg.app.criminalintent2frag.Activities.CrimeActivity;
-import bnrg.app.criminalintent2frag.Activities.CrimePagerActivity;
-import bnrg.app.criminalintent2frag.Interface.Callbacks;
+import bnrg.app.criminalintent2frag.Interfaces.Callbacks;
 import bnrg.app.criminalintent2frag.R;
 import bnrg.app.criminalintent2frag.Singletone.CrimeLab;
 import bnrg.app.criminalintent2frag.Utils.Utilities;
@@ -38,25 +33,20 @@ import static bnrg.app.criminalintent2frag.Utils.Pref.NOT_CALL_POLICE;
 import static bnrg.app.criminalintent2frag.Utils.Pref.SAVED_SUBTITLE_VISIBLE;
 
 
-public class CrimeListFragment extends Fragment implements Callbacks {
+public class CrimeListFragment extends Fragment {
 
-    //private ViewPager mViewPager;
     private RecyclerView mRecyclerView;
     private RecyclerView.Adapter mAdapter;
     private List<Crime> mCrimes;
     public static int mPos;
     private boolean mSubtitleVisible;
-    //private TextView addFirstCrime;
     private Callbacks mCallbacks;
-
-
 
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
         mCallbacks = (Callbacks) context;
     }
-
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container,
@@ -73,9 +63,6 @@ public class CrimeListFragment extends Fragment implements Callbacks {
         mRecyclerView = view.findViewById(R.id.recycler_view);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         mRecyclerView.setAdapter(createAdapter());
-
-        //TODO: addFirstCrime
-        //addFirstCrime = view.findViewById(R.id.add_new_crime);
 
         return view;
     }
@@ -153,7 +140,7 @@ public class CrimeListFragment extends Fragment implements Callbacks {
         return mAdapter;
     }
 
-    private void updateUI() {
+    public void updateUI() {
 
         RecyclerView.Adapter adapter = mRecyclerView.getAdapter();
 
@@ -165,11 +152,6 @@ public class CrimeListFragment extends Fragment implements Callbacks {
         }
 
         updateSubtitle();
-    }
-
-    @Override
-    public void onCrimeSelected(Crime crime) {
-
     }
 
 
@@ -304,6 +286,7 @@ public class CrimeListFragment extends Fragment implements Callbacks {
             /*CrimeAdapter.mPos = getAdapterPosition();
             Intent intent = CrimePagerActivity.newIntent(this.itemView.getContext(),
                     this.mToEndPolice.getContext());*/
+            /*mCallbacks.onCrimeSelected(mCrime);*/
             mCallbacks.onCrimeSelected(mCrime);
         }
     }

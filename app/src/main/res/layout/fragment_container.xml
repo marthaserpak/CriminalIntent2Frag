@@ -7,15 +7,4 @@
     android:layout_height="match_parent"
     android:id="@+id/fragment_container">
 
-    <TextView
-        android:id="@+id/add_new_crime"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:text="@string/add_first_crime"
-        android:textSize="30sp"
-        android:visibility="visible"/>
-
-
-
 </FrameLayout>
