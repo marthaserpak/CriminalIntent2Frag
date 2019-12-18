@@ -33,14 +33,14 @@ public class CrimeLab {
     }
 
     public void addCrime(Crime c) {
-        /*mCrimes.add(c);*/
         ContentValues values = getContentValues(c);
-
         mDatabase.insert(CrimeTable.NAME, null, values);
     }
 
-    public static void deleteCrime(UUID crimeId) {
-        Crime crime = getCrime(crimeId);
+    public static void deleteCrime(Crime c) {
+        mDatabase.delete(CrimeTable.NAME,
+                CrimeTable.Cols.UUID + "=?",
+                new String[]{c.getId().toString()});
     }
 
     public List<Crime> getCrimes() {
@@ -63,11 +63,11 @@ public class CrimeLab {
     public static Crime getCrime(UUID id) {
         CrimeCursorWrapper cursor = queryCrimes(
                 CrimeTable.Cols.UUID + " = ?",
-                new String[] {id.toString()}
+                new String[]{id.toString()}
         );
 
         try {
-            if( cursor.getCount() == 0) {
+            if (cursor.getCount() == 0) {
                 return null;
             }
 
@@ -88,8 +88,8 @@ public class CrimeLab {
                 new String[]{uuidString});
     }
 
-    private static /*static*/ CrimeCursorWrapper queryCrimes(String whereClause,
-                                                             String[] whereArgs) {
+    private static CrimeCursorWrapper queryCrimes(String whereClause,
+                                                  String[] whereArgs) {
         Cursor cursor = mDatabase.query(
                 CrimeTable.NAME,
                 null,

@@ -66,7 +66,7 @@ public class CrimeFragment extends Fragment {
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        mCallbacks = (Callbacks)context;
+        mCallbacks = (Callbacks) context;
     }
 
     @Override
@@ -96,14 +96,14 @@ public class CrimeFragment extends Fragment {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == R.id.delete_crime) {
-            CrimeLab crimeLab = CrimeLab.get(getActivity());
-            CrimeLab.deleteCrime(mCrime.getId());
-            Intent intent = new Intent(getActivity(), CrimeListActivity.class);
-            startActivity(intent);
-            return true;
+        switch (item.getItemId()) {
+            case R.id.delete_crime:
+                CrimeLab.deleteCrime(mCrime);
+                getActivity().finish();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
         }
-        return super.onOptionsItemSelected(item);
     }
 
     @Override
@@ -250,7 +250,8 @@ public class CrimeFragment extends Fragment {
                 }
         }
     }
-    private void  updateCrime() {
+
+    private void updateCrime() {
         CrimeLab.get(getActivity()).updateCrime(mCrime);
         mCallbacks.onCrimeUpdated(mCrime);
     }
@@ -262,7 +263,7 @@ public class CrimeFragment extends Fragment {
 
 
     @Override
-    public void onDetach(){
+    public void onDetach() {
         super.onDetach();
         mCallbacks = null;
     }
