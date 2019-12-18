@@ -42,6 +42,7 @@ public class CrimeListFragment extends Fragment {
     private boolean mSubtitleVisible;
     private Callbacks mCallbacks;
 
+
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
@@ -142,15 +143,22 @@ public class CrimeListFragment extends Fragment {
 
     public void updateUI() {
 
-        RecyclerView.Adapter adapter = mRecyclerView.getAdapter();
-
+        /*RecyclerView.Adapter adapter = mRecyclerView.getAdapter();
         if (mAdapter != null) {
             //TODO:mAdapter.notifyItemChanged(pos);
             mAdapter.notifyDataSetChanged();
         } else {
             mAdapter = new CrimeAdapter(mCrimes);
-        }
+        }*/
+        CrimeLab crimeLab = CrimeLab.get(getActivity());
+        List<Crime> crimes = crimeLab.getCrimes();
 
+        if(mAdapter == null) {
+            mAdapter = new CrimeAdapter(crimes);
+            mRecyclerView.setAdapter(mAdapter);
+        } else {
+            mAdapter.notifyDataSetChanged();
+        }
         updateSubtitle();
     }
 
@@ -346,6 +354,10 @@ public class CrimeListFragment extends Fragment {
         @Override
         public int getItemCount() {
             return mCrimes.size();
+        }
+
+        public void setCrimes(List<Crime> crimes) {
+            mCrimes = crimes;
         }
     }
 
