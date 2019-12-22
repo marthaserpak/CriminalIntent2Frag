@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.text.format.DateFormat;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -72,6 +73,7 @@ public class CrimeFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setHasOptionsMenu(true);
 
         assert getArguments() != null;
@@ -113,19 +115,30 @@ public class CrimeFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_crime,
                 container, false);
 
-        //EditText enterDescription = view.findViewById(R.id.et_details_description);
         EditText enterTitle = view.findViewById(R.id.et_title);
         CheckBox solved = view.findViewById(R.id.chb_solved);
         CheckBox requiresPolice = view.findViewById(R.id.chb_requires_police);
-        /*Button firstCrime = view.findViewById(R.id.to_start_list);
-        Button lastCrime = view.findViewById(R.id.to_end_list);*/
         Button save = view.findViewById(R.id.btn_save);
         mDateButton = view.findViewById(R.id.tv_date);
         mTimeButton = view.findViewById(R.id.btn_time);
+        Button mReportButton = view.findViewById(R.id.crime_report);
 
         mDateButton.setText(Utilities.getFormattedDate(mCrime.getDate()));
         mTimeButton.setText(Utilities.getFormattedTime(mCrime.getDate()));
         enterTitle.setText(mCrime.getTitle());
+
+        mReportButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(Intent.ACTION_SEND);
+                i.setType("text/plain");
+                i.putExtra(Intent.EXTRA_TEXT, getCrimeReport());
+                i.putExtra(Intent.EXTRA_SUBJECT,
+                        getString(R.string.crime_report_subject));
+                i = Intent.createChooser(i, getString(R.string.send_report));
+                startActivity(i);
+            }
+        });
 
         mDateButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -206,20 +219,6 @@ public class CrimeFragment extends Fragment {
             }
         });
 
-        /*firstCrime.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                final int START_POSITION = 0;
-                CrimePagerActivity.setViewPagerStart(START_POSITION);
-            }
-        });
-
-        lastCrime.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                CrimePagerActivity.setViewPagerStart(mCrimes.size());
-            }
-        });*/
         return view;
     }
 
@@ -256,16 +255,40 @@ public class CrimeFragment extends Fragment {
         mCallbacks.onCrimeUpdated(mCrime);
     }
 
-
     public interface Callbacks {
         void onCrimeUpdated(Crime crime);
     }
-
 
     @Override
     public void onDetach() {
         super.onDetach();
         mCallbacks = null;
+    }
+
+    private String getCrimeReport() {
+        String solvedString = null;
+        if (mCrime.isSolved()) {
+            solvedString = getString(R.string.crime_report_solved);
+        } else {
+            solvedString = getString(R.string.crime_report_unsolved);
+        }
+
+        String dateFormat = "EEE, MMM dd";
+        String dateString = DateFormat.format(dateFormat, mCrime
+                .getDate()).toString();
+
+        String suspect = mCrime.getSuspect();
+        if (suspect == null) {
+            suspect = getString(R.string.crime_report_no_suspect);
+        } else {
+            suspect = getString(R.string.crime_report_suspect);
+        }
+
+        String report = getString(R.string.crime_report,
+                mCrime.getTitle(), dateString,
+                solvedString, suspect);
+
+        return report;
     }
 }
 

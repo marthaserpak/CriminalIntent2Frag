@@ -12,6 +12,15 @@ public class Crime {
     private Date mTime;
     private boolean mSolved;
     private boolean mRequiresPolice;
+    private String mSuspect;
+
+    public String getSuspect() {
+        return mSuspect;
+    }
+
+    public void setSuspect(String suspect) {
+        mSuspect = suspect;
+    }
 
     public Crime(){
        this(UUID.randomUUID());
